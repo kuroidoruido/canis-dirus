@@ -17,12 +17,14 @@ type RssEntry = {
 
 async function getRssEntries(): Promise<RssEntry[]> {
   try {
+    console.log("Fetching RSS feed", RSS_FEED_URL);
     const response = await fetch(
       RSS_FEED_URL,
     );
     const xml = await response.text();
     const feed = await parseFeed(xml);
 
+    console.log(`Found ${feed.entries.length} entries in RSS feed`);
     return feed.entries.map((entry: FeedEntry) => ({
       title: entry.title.value,
       link: entry.links[0].href,
@@ -39,6 +41,10 @@ async function postToMastodon({ title, link }: RssEntry) {
 
   try {
     const mastoUrl = new URL(`${MASTODON_INSTANCE}/api/v1/statuses`);
+    console.log(`Posting status to ${mastoUrl.toString()}`, {
+      status,
+      visibility: STATUS_VISIBILITY,
+    });
     mastoUrl.searchParams.set("status", status);
     mastoUrl.searchParams.set("visibility", STATUS_VISIBILITY);
     const response = await fetch(mastoUrl.toString(), {
@@ -71,5 +77,5 @@ Deno.cron("Check RSS feed", "0 * * * *", async () => {
     }
   }
 
-  kv.close()
+  kv.close();
 });
