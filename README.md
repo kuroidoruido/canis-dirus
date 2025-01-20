@@ -22,6 +22,9 @@ MASTODON_INSTANCE=https://mastodon.social
 MASTODON_TOKEN=myawesometoken
 RSS_FEED_URL=https://example.com/links.xml
 STATUS_VISIBILITY=public
+CREATE_POSTS=true
+MESSAGE_TITLE_PREFIX="🎉 "
+MESSAGE_LINK_PREFIX="🔗 "
 ```
 
 ⚠️ To run locally, it is recommended to comment the KV and Cron lines.

@@ -8,6 +8,9 @@ const RSS_FEED_URL = Deno.env.get("RSS_FEED_URL") ||
   "https://ehret.me/links.xml";
 const STATUS_VISIBILITY = Deno.env.get("STATUS_VISIBILITY") || "unlisted";
 const KV_PREFIX = Deno.env.get("KV_PREFIX") || "canis-dirus";
+const CREATE_POSTS = (Deno.env.get("CREATE_POSTS") || "true") === "true";
+const MESSAGE_TITLE_PREFIX = Deno.env.get("MESSAGE_TITLE_PREFIX") || "🎉 ";
+const MESSAGE_LINK_PREFIX = Deno.env.get("MESSAGE_LINK_PREFIX") || "🔗 ";
 
 type RssEntry = {
   title: string;
@@ -37,7 +40,8 @@ async function getRssEntries(): Promise<RssEntry[]> {
 }
 
 async function postToMastodon({ title, link }: RssEntry) {
-  const status = `🎉 ${title}\n🔗 ${link}`;
+  const status =
+    `${MESSAGE_TITLE_PREFIX}${title}\n${MESSAGE_LINK_PREFIX}${link}`;
 
   try {
     const mastoUrl = new URL(`${MASTODON_INSTANCE}/api/v1/statuses`);
@@ -72,7 +76,9 @@ Deno.cron("Check RSS feed", "0 * * * *", async () => {
   for (const rssEntry of rssEntries) {
     const entry = await kv.get([KV_PREFIX, rssEntry.link]);
     if (!entry.value) {
-      await postToMastodon(rssEntry);
+      if (CREATE_POSTS) {
+        await postToMastodon(rssEntry);
+      }
       kv.set([KV_PREFIX, rssEntry.link], rssEntry);
     }
   }
