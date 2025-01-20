@@ -11,6 +11,7 @@ const KV_PREFIX = Deno.env.get("KV_PREFIX") || "canis-dirus";
 const CREATE_POSTS = (Deno.env.get("CREATE_POSTS") || "true") === "true";
 const MESSAGE_TITLE_PREFIX = Deno.env.get("MESSAGE_TITLE_PREFIX") || "🎉 ";
 const MESSAGE_LINK_PREFIX = Deno.env.get("MESSAGE_LINK_PREFIX") || "🔗 ";
+const CRON_SCHEDULE = Deno.env.get("CRON_SCHEDULE") || "0 * * * *";
 
 type RssEntry = {
   title: string;
@@ -69,7 +70,7 @@ async function postToMastodon({ title, link }: RssEntry) {
   }
 }
 
-Deno.cron("Check RSS feed", "0 * * * *", async () => {
+Deno.cron("Check RSS feed", CRON_SCHEDULE, async () => {
   const rssEntries = await getRssEntries();
   const kv = await Deno.openKv();
 
