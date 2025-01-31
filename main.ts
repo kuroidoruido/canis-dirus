@@ -30,7 +30,7 @@ async function getRssEntries(): Promise<RssEntry[]> {
 
     console.log(`Found ${feed.entries.length} entries in RSS feed`);
     return feed.entries.map((entry: FeedEntry) => ({
-      title: entry.title.value,
+      title: entry.title?.value,
       link: entry.links[0].href,
       published: entry.published ?? entry.updated,
     }));
