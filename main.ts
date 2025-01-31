@@ -2,16 +2,16 @@ import { type FeedEntry, parseFeed } from "jsr:@mikaelporttila/rss@*";
 
 // Mastodon API configuration
 const MASTODON_TOKEN = Deno.env.get("MASTODON_TOKEN");
-const MASTODON_INSTANCE = Deno.env.get("MASTODON_INSTANCE") ||
+const MASTODON_INSTANCE = Deno.env.get("MASTODON_INSTANCE") ??
   "https://mastodon.social";
-const RSS_FEED_URL = Deno.env.get("RSS_FEED_URL") ||
+const RSS_FEED_URL = Deno.env.get("RSS_FEED_URL") ??
   "https://ehret.me/links.xml";
-const STATUS_VISIBILITY = Deno.env.get("STATUS_VISIBILITY") || "unlisted";
-const KV_PREFIX = Deno.env.get("KV_PREFIX") || "canis-dirus";
-const CREATE_POSTS = (Deno.env.get("CREATE_POSTS") || "true") === "true";
-const MESSAGE_TITLE_PREFIX = Deno.env.get("MESSAGE_TITLE_PREFIX") || "🎉 ";
-const MESSAGE_LINK_PREFIX = Deno.env.get("MESSAGE_LINK_PREFIX") || "🔗 ";
-const CRON_SCHEDULE = Deno.env.get("CRON_SCHEDULE") || "0 * * * *";
+const STATUS_VISIBILITY = Deno.env.get("STATUS_VISIBILITY") ?? "unlisted";
+const KV_PREFIX = Deno.env.get("KV_PREFIX") ?? "canis-dirus";
+const CREATE_POSTS = (Deno.env.get("CREATE_POSTS") ?? "true") === "true";
+const MESSAGE_TITLE_PREFIX = Deno.env.get("MESSAGE_TITLE_PREFIX") ?? "🎉 ";
+const MESSAGE_LINK_PREFIX = Deno.env.get("MESSAGE_LINK_PREFIX") ?? "🔗 ";
+const CRON_SCHEDULE = Deno.env.get("CRON_SCHEDULE") ?? "0 * * * *";
 
 type RssEntry = {
   title: string;
