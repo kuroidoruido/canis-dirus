@@ -26,6 +26,7 @@ CREATE_POSTS=true
 MESSAGE_TITLE_PREFIX="🎉 "
 MESSAGE_LINK_PREFIX="🔗 "
 CRON_SCHEDULE="0 * * * *"
+MAX_ITEM_PER_RUN=1
 ```
 
 ⚠️ To run locally, it is recommended to comment the KV and Cron lines.
