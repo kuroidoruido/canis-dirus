@@ -29,8 +29,16 @@ CRON_SCHEDULE="0 * * * *"
 MAX_ITEM_PER_RUN=1
 ```
 
-⚠️ To run locally, it is recommended to comment the KV and Cron lines.
+⚠️ To run locally, use:
+
+- Set the `IS_LOCAL` environment variable to "true"
+- An access token from https://dash.deno.com/account, added to the
+  `DENO_KV_ACCESS_TOKEN` environment variable
+- The Deno KV url from the deployment dashboard, added to the `DENO_KV_URL`
+  environment variable
+
+Then run with:
 
 ```shell
-deno run --env-file=.env main.ts
+deno run --allow-env --allow-net --env-file=.env --unstable-kv main.ts
 ```
