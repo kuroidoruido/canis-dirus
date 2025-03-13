@@ -1,12 +1,12 @@
 // Mastodon API configuration
+import {
+  MESSAGE_TITLE_PREFIX,
+  MESSAGE_LINK_PREFIX,
+  MASTODON_INSTANCE,
+  STATUS_VISIBILITY,
+  MASTODON_TOKEN,
+} from "./env.ts";
 import { RssEntry } from "./rss.ts";
-
-const MASTODON_TOKEN = Deno.env.get("MASTODON_TOKEN");
-const MASTODON_INSTANCE =
-  Deno.env.get("MASTODON_INSTANCE") ?? "https://mastodon.social";
-const STATUS_VISIBILITY = Deno.env.get("STATUS_VISIBILITY") ?? "unlisted";
-const MESSAGE_TITLE_PREFIX = Deno.env.get("MESSAGE_TITLE_PREFIX") ?? "🎉 ";
-const MESSAGE_LINK_PREFIX = Deno.env.get("MESSAGE_LINK_PREFIX") ?? "🔗 ";
 
 export async function postToMastodon({ title, link }: RssEntry) {
   const status = `${MESSAGE_TITLE_PREFIX}${title}\n${MESSAGE_LINK_PREFIX}${link}`;
