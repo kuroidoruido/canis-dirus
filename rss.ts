@@ -16,7 +16,7 @@ export async function getRssEntries(): Promise<RssEntry[]> {
 
     console.log(`Found ${feed.entries.length} entries in RSS feed`);
     const items: RssEntry[] = feed.entries.map((entry: FeedEntry) => ({
-      title: entry.title.value,
+      title: entry.title?.value,
       link: entry.links[0].href,
       published: new Date(entry.published ?? entry.updated).toISOString(),
     }));
